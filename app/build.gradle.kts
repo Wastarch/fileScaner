@@ -40,6 +40,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a")
+            isUniversalApk = false
+        }
+    }
 }
 
 dependencies {
@@ -61,7 +69,5 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.3.0")
 
     implementation("com.quickbirdstudios:opencv:4.5.3.0")
-
-
 
 }
