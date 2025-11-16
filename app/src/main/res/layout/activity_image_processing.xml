@@ -56,6 +56,7 @@
             android:layout_height="match_parent"
             android:scaleType="fitCenter"/>
     </LinearLayout>
+
     <!-- 新增：操作按钮区域 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +66,12 @@
         android:layout_marginTop="16dp"
         android:visibility="gone"
         android:id="@+id/buttonContainer">
-
+        <Button
+            android:id="@+id/btnCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="裁剪"
+            android:layout_marginEnd="16dp"/>
         <Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
@@ -79,6 +85,78 @@
             android:layout_height="wrap_content"
             android:text="取消"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="边缘检测预览"
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"/>
+
+        <com.max.filescaner.EdgePreviewImageView
+            android:id="@+id/edgePreviewImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="阈值调整"/>
+        <SeekBar
+            android:id="@+id/seekBarThreshold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="255"
+            android:progress="150"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="对比度调整"/>
+        <SeekBar
+            android:id="@+id/seekBarContrast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="30"
+            android:progress="20"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="亮度调整"/>
+        <SeekBar
+            android:id="@+id/seekBarBrightness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="30"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="模糊程度"/>
+        <SeekBar
+            android:id="@+id/seekBarBlur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:progress="1"/>
+    </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

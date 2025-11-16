@@ -4,14 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
     <!-- 顶部操作栏：返回、旋转、裁剪按钮 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F5F5F5"
+        android:background="@color/ic_launcher_background"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
         android:padding="16dp">
 

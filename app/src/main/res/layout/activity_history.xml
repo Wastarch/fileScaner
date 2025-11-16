@@ -4,19 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#000000" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="92dp"
-        android:background="#F6D3D3"
+        android:background="@color/ic_launcher_background"
         android:gravity="center"
-        android:padding="16dp"
+        android:padding="20dp"
+        android:layout_marginTop="40dp"
         android:text="扫描历史记录"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold" />
     <Button
         android:id="@+id/deleteBtn"

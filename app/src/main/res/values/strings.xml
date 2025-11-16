@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">fileScaner</string>
+    <string name="main_title">File Scanner</string>
 </resources>
