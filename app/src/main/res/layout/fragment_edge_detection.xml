@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- 图像显示区域 - 修复高度约束 -->
+    <ImageView
+        android:id="@+id/iv_edge_detection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_bottom_controls"
+        android:layout_marginBottom="16dp"
+        android:scaleType="fitCenter"
+        android:background="@android:color/darker_gray" />
+
+    <!-- 进度条 - 居中显示 -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <!-- 角点触摸区域 -->
+    <FrameLayout
+        android:id="@+id/layout_edge_points"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_bottom_controls" />
+
+    <!-- 调整控制面板 -->
+    <LinearLayout
+        android:id="@+id/layout_adjust_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layout_bottom_controls"
+        android:orientation="vertical"
+        android:background="#CCFFFFFF"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="边缘检测阈值"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <SeekBar
+            android:id="@+id/seekbar_threshold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:progress="100" />
+
+        <TextView
+            android:id="@+id/tv_threshold_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="阈值: 100"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="重置边缘"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <!-- 底部按钮区域 - 设置固定高度 -->
+    <LinearLayout
+        android:id="@+id/layout_bottom_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/btn_adjust"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="调整边缘"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="下一步：透视矫正"
+            android:backgroundTint="@android:color/holo_blue_dark" />
+    </LinearLayout>
+
+</RelativeLayout>

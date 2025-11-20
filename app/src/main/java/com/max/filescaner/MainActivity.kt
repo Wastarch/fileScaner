@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import org.opencv.core.Point
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -82,11 +83,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 从相册选择照片按钮的点击事件
-        fromAlbumBtn.setOnClickListener{
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-            intent.type = "image/*"
-            startActivityForResult(intent, fromAlbum)
+        fromAlbumBtn.setOnClickListener {
+            pickImageLauncher.launch(arrayOf("image/*"))
         }
 
         // 历史记录按钮点击事件
@@ -96,6 +94,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri?.let {
+            // 处理选择的图片URI
+            val intent = Intent(this, ImageProcessingActivity::class.java)
+            intent.putExtra("IMAGE_PATH", getPathFromUri(it)) // 需要实现getPathFromUri方法
+            intent.putExtra("IS_FROM_CAMERA", false)
+            startActivity(intent)
+        }
+    }
+    // 添加Uri转路径的方法
+    private fun getPathFromUri(uri: Uri): String? {
+        return try {
+            val cursor = contentResolver.query(uri, arrayOf(MediaStore.Images.Media.DATA), null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                    it.getString(columnIndex)
+                } else {
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 
     private fun requestPermissions() {
         // 1. 根据Android版本动态构建权限列表
