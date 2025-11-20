@@ -1,6 +1,6 @@
 # FileScanner - Android文档扫描应用
 
-FileScanner是一款功能实用的Android文档扫描应用，支持通过相机拍照或从相册选择图片进行文档扫描处理，提供高质量的图像增强、边缘检测和二值化功能，帮助用户快速将纸质文档数字化。
+FileScanner是一款功能实用的Android文档扫描应用，支持通过相机拍照或从相册选择图片进行文档扫描处理，提供高质量的图像增强、边缘检测和透视校正功能，帮助用户快速将纸质文档数字化。
 
 ## 许可证
 
@@ -12,8 +12,9 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
 
 - 📸 **相机扫描**：直接通过相机拍摄文档并进行实时处理
 - 📁 **相册导入**：从设备相册选择现有图片进行扫描处理
+- 📐 **智能边缘检测**：自动识别文档边缘，支持手动调整边缘点
+- 🔄 **透视校正**：修正文档拍摄角度，生成标准矩形图像
 - ✨ **图像增强**：自动进行灰度转换、对比度增强和二值化处理
-- 📏 **边缘检测**：智能检测文档边缘，支持手动调整边缘点
 - 🎨 **参数调节**：支持调整阈值、对比度、亮度和模糊参数
 - 🔄 **图片编辑**：支持图片旋转（左转/右转）功能
 - 📚 **历史记录**：自动保存扫描历史，方便查看和管理
@@ -35,26 +36,36 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
 
 应用采用经典的Activity架构，主要包含以下几个核心模块：
 
-1. **主界面 (MainActivity)** <mcsymbol name="MainActivity" filename="MainActivity.kt" path="app/src/main/java/com/max/filescaner/MainActivity.kt" startline="1" type="class"></mcsymbol>
+1. **主界面 (MainActivity)**
    - 应用入口点
    - 提供相机拍照、相册选择和历史记录访问功能
    - 处理权限请求和相机调用
    - 管理临时文件和图片存储
 
-2. **图像处理界面 (ImageProcessingActivity)** <mcsymbol name="ImageProcessingActivity" filename="ImageProcessingActivity.kt" path="app/src/main/java/com/max/filescaner/ImageProcessingActivity.kt" startline="1" type="class"></mcsymbol>
+2. **图像处理界面 (ImageProcessingActivity)**
    - 核心图像处理逻辑
-   - 实现灰度转换、对比度增强、边缘检测和二值化算法
+   - 使用ViewPager2和Fragment实现多标签页
+   - 包含边缘检测和透视校正两个功能模块
    - 提供处理前后对比预览
-   - 支持实时参数调节和边缘点手动调整
-   - 使用自定义EdgePreviewImageView组件进行边缘预览
 
-3. **图片详情界面 (ImageDetailActivity)** <mcsymbol name="ImageDetailActivity" filename="ImageDetailActivity.kt" path="app/src/main/java/com/max/filescaner/ImageDetailActivity.kt" startline="1" type="class"></mcsymbol>
+3. **边缘检测模块 (EdgeDetectionFragment)**
+   - 智能检测文档边缘
+   - 支持手动调整四个边缘点
+   - 实时预览检测结果
+   - 调节Canny边缘检测阈值参数
+
+4. **透视校正模块 (PerspectiveCorrectionFragment)**
+   - 根据四个边缘点进行透视变换
+   - 将文档校正为标准矩形
+   - 生成最终的扫描效果
+
+5. **图片详情界面 (ImageDetailActivity)**
    - 显示图片全屏预览
    - 提供图片旋转编辑功能
    - 支持再次处理图片
    - 保存编辑后的图片
 
-4. **历史记录界面 (HistoryActivity)** <mcsymbol name="HistoryActivity" filename="HistoryActivity.kt" path="app/src/main/java/com/max/filescaner/HistoryActivity.kt" startline="1" type="class"></mcsymbol>
+6. **历史记录界面 (HistoryActivity)**
    - 以网格布局展示所有扫描历史
    - 支持长按进入多选模式
    - 实现批量删除功能
@@ -64,12 +75,11 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
 
 1. **输入获取**：通过相机拍摄或相册选择获取原始图像
 2. **边缘检测**：自动识别文档边缘，支持手动调整边缘点
-3. **图像裁剪**：根据边缘点进行透视变换和裁剪
+3. **透视校正**：根据边缘点进行透视变换和校正
 4. **预处理**：灰度转换，将彩色图像转换为灰度图
 5. **增强处理**：提升对比度和亮度，使文档内容更加清晰
-6. **二值化**：将图像转换为黑白二值图像，突出文字内容
-7. **实时预览**：显示处理前后对比，支持参数实时调节
-8. **保存管理**：保存处理后的图像到应用私有存储目录
+6. **实时预览**：显示处理前后对比，支持参数实时调节
+7. **保存管理**：保存处理后的图像到应用私有存储目录
 
 ## 权限要求
 
@@ -91,7 +101,7 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
 2. **构建和运行**：
    ```bash
    # 克隆仓库（如果适用）
-   git clone <repository-url>
+   gh repo clone Wastarch/fileScaner
    
    # 使用Android Studio打开项目
    # 或使用命令行构建
@@ -99,11 +109,12 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
    
    # 安装到设备
    ./gradlew installDebug
+   ```
 
 ## 文件存储
 
 - **扫描历史存储路径**：`/storage/emulated/0/Android/data/com.max.filescaner/files/Pictures/FileScanner/`
-- **文件命名格式**：`scan_YYYYMMdd_HHmmss.jpg`（基于时间戳）
+- **文件命名格式**：`scanned_YYYYMMdd_HHmmss.jpg`（基于时间戳）
 - **临时文件**：存储在应用缓存目录，确保不占用过多存储空间
 
 ## 项目结构
@@ -112,24 +123,23 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
    ├── src/
    │   ├── main/
    │   │   ├── java/com/max/filescaner/
-   │   │   │   ├── MainActivity.kt          # 主界面
-   │   │   │   ├── ImageProcessingActivity.kt # 图像处理界面
-   │   │   │   ├── ImageDetailActivity.kt   # 图片详情界面
-   │   │   │   ├── HistoryActivity.kt       # 历史记录界面
-   │   │   │   └── EdgePreviewImageView.kt  # 自定义边缘预览组件
+   │   │   │   ├── MainActivity.kt              # 主界面
+   │   │   │   ├── ImageProcessingActivity.kt   # 图像处理界面（使用ViewPager2）
+   │   │   │   ├── EdgeDetectionFragment.kt     # 边缘检测功能模块
+   │   │   │   ├── PerspectiveCorrectionFragment.kt # 透视校正功能模块
+   │   │   │   ├── ImageDetailActivity.kt       # 图片详情界面
+   │   │   │   └── HistoryActivity.kt           # 历史记录界面
    │   │   ├── res/
-   │   │   │   ├── layout/                  # 布局文件
-   │   │   │   ├── values/                  # 字符串、样式等资源
-   │   │   │   ├── xml/                     # 配置文件
-   │   │   │   └── mipmap/                  # 应用图标
-   │   │   └── AndroidManifest.xml          # 应用清单
-   │   ├── test/                            # 单元测试
-   │   └── androidTest/                     # 仪器化测试
-   ├── build.gradle.kts                     # 应用模块构建配置
-   └── proguard-rules.pro                   # 代码混淆规则
+   │   │   │   ├── layout/                      # 布局文件
+   │   │   │   ├── values/                      # 字符串、样式等资源
+   │   │   │   ├── xml/                         # 配置文件
+   │   │   │   └── mipmap/                      # 应用图标
+   │   │   └── AndroidManifest.xml              # 应用清单
+   │   ├── test/                                # 单元测试
+   │   └── androidTest/                         # 仪器化测试
+   ├── build.gradle.kts                         # 应用模块构建配置
+   └── proguard-rules.pro                       # 代码混淆规则
 ```
-
-
 
 ## 使用指南
 
@@ -137,14 +147,15 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
    - 点击"相机扫描"按钮使用相机拍摄文档
    - 或点击"相册选择"从设备中选择已有图片
 
-2. **图像优化**：
-   - 调整边缘点以精确裁剪文档
-   - 使用滑块调节阈值、对比度、亮度和模糊参数
-   - 实时预览处理效果
+2. **边缘检测**：
+   - 等待自动边缘检测完成
+   - 点击"调整边缘"按钮手动调整四个边缘点
+   - 使用滑块调节检测阈值参数
+   - 点击"下一步：透视校正"继续处理
 
-3. **保存结果**：
-   - 满意效果后点击"保存"按钮
-   - 处理后的图片将自动保存到历史记录
+3. **透视校正**：
+   - 查看校正后的文档效果
+   - 确认结果满意后保存
 
 4. **管理历史**：
    - 点击"历史记录"查看所有扫描文档
@@ -158,4 +169,4 @@ FileScanner是一款功能实用的Android文档扫描应用，支持通过相�
 - 支持Android 7.0及以上版本
 - 采用Material3设计风格
 - 针对arm64-v8a和armeabi-v7a架构进行优化
-
+- 使用ViewPager2和Fragment实现图像处理功能的分页展示
