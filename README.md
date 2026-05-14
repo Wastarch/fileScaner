@@ -1,4 +1,4 @@
-# FileScanner - Android文档扫描应用
+# FileScanner - Android文档扫描应用(没写完不要用)
 
 FileScanner是一款功能实用的Android文档扫描应用，支持通过相机拍照或从相册选择图片进行文档扫描处理，提供高质量的图像增强、边缘检测和透视校正功能，帮助用户快速将纸质文档数字化。
 
